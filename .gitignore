@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.env
+.ipynb_checkpoints/
+
+# Data files
+data/
+*.csv
+*.db
+*.sqlite
+
+# Virtual environment
+venv/
+.env/

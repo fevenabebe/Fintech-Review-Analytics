@@ -1,0 +1,23 @@
+## Data Collection Methodology
+
+User reviews were scraped from the Google Play Store using the `google-play-scraper` Python package.
+
+Three Ethiopian banking apps were analyzed:
+- Commercial Bank of Ethiopia (CBE)
+- Bank of Abyssinia (BOA)
+- Dashen Bank
+
+For each app, review text, ratings, review dates, and app metadata were collected.
+
+## Preprocessing Steps
+
+- Removed duplicate reviews using review IDs
+- Dropped rows with missing review text or ratings
+- Standardized dates into YYYY-MM-DD format
+- Removed empty reviews and unnecessary whitespace
+
+## Data Quality Summary
+
+- Total reviews collected: 1200+
+- Missing values removed: documented in preprocessing logs
+- Duplicate reviews removed: documented in preprocessing logs
