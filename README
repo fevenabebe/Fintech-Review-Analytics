@@ -1,23 +1,81 @@
-## Data Collection Methodology
+# Fintech Review Analytics
 
-User reviews were scraped from the Google Play Store using the `google-play-scraper` Python package.
+## Overview
 
-Three Ethiopian banking apps were analyzed:
+This project analyzes Google Play Store reviews for Ethiopian banking apps to extract insights on user sentiment, recurring issues, and feature requests. The goal is to support product teams in improving mobile banking experiences.
+
+Analyzed apps:
 - Commercial Bank of Ethiopia (CBE)
 - Bank of Abyssinia (BOA)
 - Dashen Bank
 
-For each app, review text, ratings, review dates, and app metadata were collected.
+---
 
-## Preprocessing Steps
+## Project Objectives
 
-- Removed duplicate reviews using review IDs
-- Dropped rows with missing review text or ratings
-- Standardized dates into YYYY-MM-DD format
-- Removed empty reviews and unnecessary whitespace
+The project is structured into four main tasks:
 
-## Data Quality Summary
+### Task 1: Data Collection & Preprocessing
+- Scraped Google Play Store reviews using `google-play-scraper`
+- Collected review text, ratings, dates, and app metadata
+- Cleaned dataset by removing duplicates and missing values
+- Standardized date formats (YYYY-MM-DD)
+- Created `clean_review` for NLP processing
 
-- Total reviews collected: 1200+
-- Missing values removed: documented in preprocessing logs
-- Duplicate reviews removed: documented in preprocessing logs
+---
+
+### Task 2: Sentiment & Thematic Analysis
+- Applied sentiment analysis to classify reviews into:
+  - Positive
+  - Negative
+  - Neutral
+- Generated sentiment confidence scores
+- Extracted recurring themes using keyword-based classification
+
+### Identified Themes:
+- Account Access Issues
+- Transaction Performance
+- Authentication Problems
+- Feature Requests
+- UI & User Experience
+
+### Design Decisions:
+- Sentiment analysis is performed on raw text to preserve meaning
+- Theme extraction is performed on cleaned text for better keyword quality
+
+---
+
+## Final Dataset
+
+The processed dataset includes:
+
+- review_text
+- rating
+- date
+- bank
+- clean_review
+- sentiment_label
+- sentiment_score
+- identified_theme
+
+Saved as:data/final_reviews.csv
+
+---
+
+## Installation
+
+```bash
+pip install -r requirements.txt
+
+---
+
+## Project Structure
+fintech-review-analytics/
+├── data/
+├── notebooks/
+├── src/
+├── scripts/
+├── tests/
+├── requirements.txt
+├── README.md
+└── .github/
