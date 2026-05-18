@@ -202,6 +202,8 @@ fintech-review-analytics/
 │       └── unittests.yml
 ├── data/
 ├── notebooks/
+|   |── task-2,ipynb
+|   |── task-4_insights.ipynb
 ├── sql/
 │   ├── schema.sql
 |   |── schema_result.txt
