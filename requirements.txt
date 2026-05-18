@@ -11,3 +11,4 @@ vaderSentiment
 sqlalchemy
 psycopg2-binary
 pytest
+psycopg2

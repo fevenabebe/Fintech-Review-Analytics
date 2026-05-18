@@ -1,4 +1,4 @@
-import pandas as pd
+import pandas as pdpip
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 analyzer = SentimentIntensityAnalyzer()

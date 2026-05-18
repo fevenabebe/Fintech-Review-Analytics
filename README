@@ -15,67 +15,236 @@ Analyzed apps:
 
 The project is structured into four main tasks:
 
+---
+
 ### Task 1: Data Collection & Preprocessing
+
 - Scraped Google Play Store reviews using `google-play-scraper`
 - Collected review text, ratings, dates, and app metadata
 - Cleaned dataset by removing duplicates and missing values
-- Standardized date formats (YYYY-MM-DD)
+- Standardized date formats (`YYYY-MM-DD`)
 - Created `clean_review` for NLP processing
+
+### Preprocessing Pipeline
+
+The preprocessing pipeline includes:
+- Lowercasing text
+- Removing punctuation and numbers
+- Removing stopwords
+- Basic token cleaning
+- Optional lightweight lemmatization
+
+### Data Quality Summary
+
+- Total reviews collected: 1200+
+- Duplicate reviews removed
+- Missing reviews and ratings dropped
+- Dataset prepared for NLP analysis
 
 ---
 
 ### Task 2: Sentiment & Thematic Analysis
-- Applied sentiment analysis to classify reviews into:
+
+- Applied sentiment analysis using VADER
+- Classified reviews into:
   - Positive
   - Negative
   - Neutral
 - Generated sentiment confidence scores
 - Extracted recurring themes using keyword-based classification
 
-### Identified Themes:
+### Identified Themes
+
 - Account Access Issues
 - Transaction Performance
 - Authentication Problems
 - Feature Requests
 - UI & User Experience
+- Other
 
-### Design Decisions:
-- Sentiment analysis is performed on raw text to preserve meaning
+### Design Decisions
+
+- Sentiment analysis is performed on raw review text to preserve meaning and emojis
 - Theme extraction is performed on cleaned text for better keyword quality
+- Modular NLP scripts were created for preprocessing, sentiment analysis, and theme extraction
+
+### Outputs Generated
+
+The final processed dataset includes:
+- `review_id`
+- `review_text`
+- `rating`
+- `date`
+- `bank`
+- `source`
+- `clean_review`
+- `sentiment_label`
+- `sentiment_score`
+- `identified_theme`
+
+Saved as:
+
+```text
+data/final_reviews.csv
+```
 
 ---
 
-## Final Dataset
+### Task 3: PostgreSQL Database Storage
 
-The processed dataset includes:
+A PostgreSQL database was created to store the cleaned and processed review data in a structured relational format.
 
-- review_text
-- rating
-- date
-- bank
-- clean_review
-- sentiment_label
-- sentiment_score
-- identified_theme
+### Database Name
 
-Saved as:data/final_reviews.csv
+```text
+bank_reviews
+```
+
+### Database Tables
+
+#### 1. banks
+
+Stores metadata about banking applications.
+
+| Column Name | Description |
+|---|---|
+| bank_id | Primary Key |
+| bank_name | Name of the bank |
+| app_name | Mobile application name |
+
+#### 2. reviews
+
+Stores processed review information.
+
+| Column Name | Description |
+|---|---|
+| review_id | Primary Key |
+| bank_id | Foreign Key referencing banks |
+| review_text | User review |
+| rating | Star rating |
+| review_date | Date of review |
+| sentiment_label | Positive/Negative/Neutral |
+| sentiment_score | Sentiment confidence score |
+| identified_theme | Extracted review theme |
+| source | Data source |
+
+### Technologies Used
+
+- PostgreSQL
+- SQLAlchemy
+- psycopg2
+- pandas
+
+### Database Workflow
+
+- Created PostgreSQL database locally
+- Designed relational schema
+- Loaded processed CSV data into PostgreSQL using Python
+- Verified integrity using SQL queries
+
+### Verification Queries
+
+The following checks were performed:
+- Count reviews per bank
+- Compute average ratings
+- Check missing review text
+- Check missing sentiment labels
+
+SQL files are stored in:
+
+```text
+sql/schema.sql
+sql/verification_queries.sql
+```
 
 ---
 
 ## Installation
 
+Install dependencies:
+
 ```bash
 pip install -r requirements.txt
+```
+
+---
+
+## Running the Project
+
+### 1. Scrape Reviews
+
+```bash
+python src/scrape_reviews.py
+```
+
+### 2. Preprocess and Analyze Reviews
+
+Run the notebook:
+
+```text
+notebooks/task2_analysis.ipynb
+```
+
+### 3. Load Data into PostgreSQL
+
+```bash
+python src/load_to_postgres.py
+```
 
 ---
 
 ## Project Structure
+
+```text
 fintech-review-analytics/
+├── .github/
+│   └── workflows/
+│       └── unittests.yml
 ├── data/
 ├── notebooks/
+├── sql/
+│   ├── schema.sql
+|   |── schema_result.txt
+│   └── verification_queries.sql
+|   |── verification.txt
 ├── src/
-├── scripts/
+│   ├── scrape_reviews.py
+│   ├── text_preprocessing.py
+│   ├── sentiment.py
+│   ├── themes.py
+│   └── load_to_postgres.py
 ├── tests/
 ├── requirements.txt
 ├── README.md
-└── .github/
+└── .gitignore
+```
+
+---
+
+## Tools & Libraries
+
+- pandas
+- nltk
+- vaderSentiment
+- scikit-learn
+- google-play-scraper
+- SQLAlchemy
+- psycopg2
+- PostgreSQL
+
+---
+
+## Future Improvements
+
+- Use transformer-based sentiment analysis (DistilBERT)
+- Add topic modeling (LDA/NMF)
+- Improve theme extraction using semantic similarity
+- Deploy dashboard for interactive analytics
+- Add automated testing and logging
+
+---
+
+## Author
+
+10 Academy — Artificial Intelligence Mastery Program
+Week 2 Challenge Project
